@@ -382,3 +382,8 @@ Red-team harness: configurable agentic LLM terminal with Parseltongue + L1B3RT4S
   Template-filling note: the HTML has a CSS block full of literal `{`/`}` so it's built
   with plain `__TOKEN__` + `.replace()`, never `.format()` — same rule as the `[presets]`
   lesson below, now proven a second time in a different file type.
+
+## Base44 dev environment
+- `docker compose -f docker-compose.base44.yml up -d`: `api` (wallbreaker dashboard, :8787), `web` (Vite via bun — the npm lockfile is out of sync, so use `bun.lock`), `proxy` (nginx on :3000).
+- nginx strips the `Origin` header on `/api/` because the dashboard's CSRF guard only accepts loopback origins; app code is untouched.
+- No external secrets needed to boot. To fire attacks, add a `[target]`/endpoint config (`config.toml`, see `config.example.toml`) and provider keys (e.g. OPENROUTER_API_KEY).
